@@ -22,15 +22,11 @@ public class BorrowerManagement {
 	
 	@RequestMapping(value="/addBorrower", method=RequestMethod.POST)
 	public ResponseEntity<String> borrower(
-			@RequestParam(required=true) int ssn,
-			@RequestParam(required=true) String name,
+			@RequestParam(required=true) String ssn,
+			@RequestParam(required=true) String fname,
+			@RequestParam(required=true) String lname,
 			@RequestParam(required=true) String address){
-		/*if(!borrowerManageService.isSsnPresent(ssn)){
-return new ResponseEntity<String>(gson.toJson(borrowerManageService.addBorrower(name, ssn, address)),HttpStatus.OK);
-		}
-		else{
-			return new ResponseEntity<String>(gson.toJson("User already exist"),HttpStatus.BAD_REQUEST);
-		}
+		return new ResponseEntity<String>(gson.toJson(borrowerManageService.addBorrower(fname,lname, ssn, address)),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/fines")
@@ -44,7 +40,7 @@ return new ResponseEntity<String>(gson.toJson(borrowerManageService.addBorrower(
 	public ResponseEntity<String> fineEntry( 
 			@RequestParam(required=true)boolean isPaid
 			){
-		return new ResponseEntity<String>(gson.toJson(borrowerManageService.FinePaid(isPaid)), HttpStatus.OK)*/;
+		return new ResponseEntity<String>(gson.toJson(borrowerManageService.FinePaid(isPaid)), HttpStatus.OK);
 		
 		return new ResponseEntity<String>("hello",HttpStatus.OK);
 	}
