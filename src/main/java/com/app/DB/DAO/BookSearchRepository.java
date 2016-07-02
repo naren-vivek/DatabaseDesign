@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
 import com.app.DB.model.Book;
 
 @Repository
-public interface BookSearchRepository extends CrudRepository<Book, String>{
+public interface BookSearchRepository extends CrudRepository<Book, String> {
 
-	/*@Query("from Book bk "
-			+ " where bk.isbn=:value or bk.title=:value")*/
-	/*@Query(value="select b.isbn,b.title,a.name from book b natural join"
-+" book_authors ba natural join authors a where a.name like '%will%' or b.isbn like '%will%'"
-+" or b.title like '%will%'")
-	public List<Book> searchBooks(@Param("value")String value);*/
+	/*
+	 * @Query("from Book bk " + " where bk.isbn=:value or bk.title=:value")
+	 */
+	@Query("select b.isbn,b.title,a.name from Book b join"
+			+ " b.authors a where a.name like %?1% or b.isbn like %?1% or b.title like %?1%")
+	public List<Book> searchBooks(@Param("value") String value);
 }

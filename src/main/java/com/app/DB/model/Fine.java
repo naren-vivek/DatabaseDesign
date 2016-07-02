@@ -3,6 +3,8 @@ package com.app.DB.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the fines database table.
@@ -24,7 +26,8 @@ public class Fine implements Serializable {
 	private byte paid;
 
 	//bi-directional one-to-one association to BookLoan
-	@OneToOne
+	@JsonIgnore
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="loan_id")
 	private BookLoan bookLoan;
 

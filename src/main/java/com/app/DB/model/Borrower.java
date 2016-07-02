@@ -30,7 +30,8 @@ public class Borrower implements Serializable {
 	
 
 	//bi-directional many-to-one association to BookLoan
-	@OneToMany(mappedBy="borrower")
+	
+	@OneToMany(mappedBy="borrower",fetch=FetchType.LAZY)
 	private List<BookLoan> bookLoans;
 
 	public Borrower() {

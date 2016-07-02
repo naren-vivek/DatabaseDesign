@@ -10,15 +10,14 @@ import com.app.DB.model.Book;
 @Service
 public class BookSearchS{
 
-	/*@Autowired
-	BookSearchRepository bookSearchRepository;*/
+	@Autowired
+	BookSearchRepository bookSearchRepository;
 	
 	public List<Book> search(String value) {
-		return null;
 		// TODO Auto-generated method stub
-		/*
+		
 		List<Book> search=bookSearchRepository.searchBooks(value);
-		return search;*/
+		return search;
 	}
 
 }

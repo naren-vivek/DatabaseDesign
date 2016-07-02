@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.DB.DAO.BookRepository;
 import com.app.DB.DAO.BorrowerRepository;
 import com.app.DB.DAO.FineRepository;
 import com.app.DB.model.Book;
 import com.app.DB.model.Borrower;
 import com.app.DB.model.Fine;
+
 
 @Service
 public class BorrowerManageS {

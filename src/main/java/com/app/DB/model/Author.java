@@ -10,6 +10,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the authors database table.
@@ -28,6 +30,7 @@ public class Author implements Serializable {
 	private String name;
 
 	//bi-directional many-to-many association to Book
+	@JsonIgnore
 	@ManyToMany(mappedBy="authors")
 	private List<Book> books;
 

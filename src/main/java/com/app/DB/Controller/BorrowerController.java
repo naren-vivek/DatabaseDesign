@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 @RequestMapping("/borrower")
 public class BorrowerController {
 	
-	@Autowired
+	/*@Autowired
 	BorrowerManageS borrowerManageService;
 	
 	Gson gson=new Gson();
@@ -31,11 +31,12 @@ public class BorrowerController {
 		return new ResponseEntity<String>(gson.toJson(borrowerManageService.addBorrower(cardno,fname,lname, ssn, address,phoneNumber)),HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/fines")
+	@RequestMapping(value="/fines",method=RequestMethod.GET)
 	public ResponseEntity<String> fines(
 			@RequestParam(required=true)String fname,
 			@RequestParam(required=true)String lname
 		){
+		//return new ResponseEntity<String>(gson.toJson(borrowerManageService.fine(fname,lname)),HttpStatus.OK);
 		return new ResponseEntity<String>(gson.toJson(borrowerManageService.fines(fname,lname)),HttpStatus.OK); 	
 	}
 	
@@ -44,7 +45,7 @@ public class BorrowerController {
 			@RequestParam(required=true)String fname,
 			@RequestParam(required=true)String lname){
 		return new ResponseEntity<String>(gson.toJson(borrowerManageService.getOverdue(fname,lname)),HttpStatus.OK);
-	}
+	}*/
 	
 	/*@RequestMapping(value="/fineEntry")
 	public ResponseEntity<String> fineEntry( 

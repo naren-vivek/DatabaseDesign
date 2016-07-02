@@ -32,17 +32,17 @@ public class BookLoan implements Serializable {
 	private Date dueDate;
 
 	//bi-directional many-to-one association to BookCopy
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="book_id")
 	private BookCopy bookCopy;
 
 	//bi-directional many-to-one association to Borrower
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="card_no")
 	private Borrower borrower;
 
 	//bi-directional one-to-one association to Fine
-	@OneToOne(mappedBy="bookLoan")
+	//@OneToOne(mappedBy="bookLoan")
 	private Fine fine;
 
 	public BookLoan() {
