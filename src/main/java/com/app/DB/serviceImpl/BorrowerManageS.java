@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.app.DB.DAO.BookRepository;
 import com.app.DB.DAO.BorrowerRepository;
@@ -14,6 +15,7 @@ import com.app.DB.model.Fine;
 
 
 @Service
+@Transactional
 public class BorrowerManageS {
 
 	@Autowired
@@ -53,5 +55,10 @@ public class BorrowerManageS {
 	public List<Book> getOverdue(String fname,String lname){
 		List<Book> books=bookRepository.getOverdueBook(fname,lname);
 		return books;
+	}
+	
+	public boolean finePaid(String bookId){
+		fineRepository.FineEntry(bookId);
+		return true;
 	}
 }

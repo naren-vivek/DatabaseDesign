@@ -18,4 +18,5 @@ public interface BookRepository extends CrudRepository<Book, String>{
 			+ "bc.bookLoans bl join bl.borrower bo where bo.fname=?1"
 			+ " and bo.lname=?2 and datediff(bl.dueDate,curdate())<0")
 	public List<Book> getOverdueBook(String fname, String lname);
+	
 }

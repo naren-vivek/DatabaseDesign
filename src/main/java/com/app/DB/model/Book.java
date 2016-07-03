@@ -4,10 +4,13 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the book database table.
  * 
+ */
+/**
+ * @author NARENTHARAA
+ *
  */
 @Entity
 @Table(name = "book")
@@ -19,21 +22,14 @@ public class Book implements Serializable {
 
 	private String title;
 
-	//bi-directional many-to-many association to Author
+	// bi-directional many-to-many association to Author
 	@ManyToMany
-	@JoinTable(
-		name="book_authors"
-		, joinColumns={
-			@JoinColumn(name="isbn")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="author_id")
-			}
-		)
+	@JoinTable(name = "book_authors", joinColumns = { @JoinColumn(name = "isbn") }, inverseJoinColumns = {
+			@JoinColumn(name = "author_id") })
 	private List<Author> authors;
 
-	//bi-directional many-to-one association to BookCopy
-	@OneToMany(mappedBy="book")
+	// bi-directional many-to-one association to BookCopy
+	@OneToMany(mappedBy = "book")
 	private List<BookCopy> bookCopies;
 
 	public Book() {
@@ -83,6 +79,11 @@ public class Book implements Serializable {
 		bookCopy.setBook(null);
 
 		return bookCopy;
+	}
+
+	@Override
+	public String toString() {
+		return "Book [isbn=" + isbn + ", title=" + title + "]";
 	}
 
 }

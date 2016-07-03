@@ -13,7 +13,7 @@ public class BookSearchS{
 	@Autowired
 	BookSearchRepository bookSearchRepository;
 	
-	public List<Book> search(String value,String branch) {
+	public List<Book> search(String value,int branch) {
 		// TODO Auto-generated method stub
 		
 		List<Book> search=bookSearchRepository.searchBooks(value,branch);

@@ -20,19 +20,18 @@ public class BookSearch {
 
 	@Autowired
 	BookSearchS bookSearch;
-	Gson gson=new Gson();
+	Gson gson = new Gson();
 
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<Book>> bookSearch( 
-			//@RequestParam(required=true)String libraryBranch,
-			@RequestParam String field,
-			@RequestParam String branch
-			)throws Exception{
-		
-		List<Book> books = bookSearch.search(field,branch);
-		//return books;
-		return new ResponseEntity<List<Book>>(books,HttpStatus.OK);
-		
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<Book>> bookSearch(
+			// @RequestParam(required=true)String libraryBranch,
+			@RequestParam(required = true) String field, @RequestParam(required = true) int branch) throws Exception {
+
+		List<Book> books = bookSearch.search(field, branch);
+		// return books;
+
+		return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
+
 	}
 
 }

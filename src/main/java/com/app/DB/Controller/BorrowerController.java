@@ -36,7 +36,6 @@ public class BorrowerController {
 			@RequestParam(required=true)String fname,
 			@RequestParam(required=true)String lname
 		){
-		//return new ResponseEntity<String>(gson.toJson(borrowerManageService.fine(fname,lname)),HttpStatus.OK);
 		return new ResponseEntity<String>(gson.toJson(borrowerManageService.fines(fname,lname)),HttpStatus.OK); 	
 	}
 	
@@ -47,12 +46,10 @@ public class BorrowerController {
 		return new ResponseEntity<String>(gson.toJson(borrowerManageService.getOverdue(fname,lname)),HttpStatus.OK);
 	}
 	
-	/*@RequestMapping(value="/fineEntry")
+	@RequestMapping(value="/fineEntry")
 	public ResponseEntity<String> fineEntry( 
-			@RequestParam(required=true)boolean isPaid
+			@RequestParam(required=true)String bookId
 			){
-		return new ResponseEntity<String>(gson.toJson(borrowerManageService.FinePaid(isPaid)), HttpStatus.OK);
-		
-		return new ResponseEntity<String>("hello",HttpStatus.OK);
-	}*/
+		return new ResponseEntity<String>(gson.toJson(borrowerManageService.finePaid(bookId)), HttpStatus.OK);
+	}
 }
