@@ -25,10 +25,11 @@ public class BookSearch {
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<Book>> bookSearch( 
 			//@RequestParam(required=true)String libraryBranch,
-			@RequestParam String field
+			@RequestParam String field,
+			@RequestParam String branch
 			)throws Exception{
 		
-		List<Book> books = bookSearch.search(field);
+		List<Book> books = bookSearch.search(field,branch);
 		//return books;
 		return new ResponseEntity<List<Book>>(books,HttpStatus.OK);
 		

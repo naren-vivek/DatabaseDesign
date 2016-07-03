@@ -17,5 +17,5 @@ public interface BookSearchRepository extends CrudRepository<Book, String> {
 	 */
 	@Query("select b.isbn,b.title,a.name from Book b join"
 			+ " b.authors a where a.name like %?1% or b.isbn like %?1% or b.title like %?1%")
-	public List<Book> searchBooks(@Param("value") String value);
+	public List<Book> searchBooks(String value,String branch);
 }

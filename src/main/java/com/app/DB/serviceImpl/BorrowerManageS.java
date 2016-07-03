@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.DB.DAO.BookRepository;
 import com.app.DB.DAO.BorrowerRepository;
 import com.app.DB.DAO.FineRepository;
 import com.app.DB.model.Book;
@@ -21,9 +22,9 @@ public class BorrowerManageS {
 	 @Autowired
 	FineRepository fineRepository;
 	
-	/*@Autowired
+	@Autowired
 	BookRepository bookRepository;
-	*/
+	
 	public boolean addBorrower(String cardNo,String fname,String lname,String ssn,String address,String PhoneNumber){
 		
 		if(borrowerRepository.exists(ssn)){
@@ -50,8 +51,7 @@ public class BorrowerManageS {
 	}
 	
 	public List<Book> getOverdue(String fname,String lname){
-		return null;
-		/*List<Book> books=bookRepository.getOverdueBook(fname,lname);
-		return books;*/
+		List<Book> books=bookRepository.getOverdueBook(fname,lname);
+		return books;
 	}
 }

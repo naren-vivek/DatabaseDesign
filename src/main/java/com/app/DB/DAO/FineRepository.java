@@ -13,6 +13,4 @@ public interface FineRepository extends CrudRepository<Fine, String>{
 			+ "where b.fname=?1 and b.lname=?2")
 	public Fine getFines(String fname,String lname);
 	
-	@Query(value="select * from fines",nativeQuery=true)
-	public Fine getFine();
 }

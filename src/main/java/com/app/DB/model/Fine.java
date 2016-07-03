@@ -1,9 +1,15 @@
 package com.app.DB.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 
 /**
@@ -23,10 +29,10 @@ public class Fine implements Serializable {
 	@Column(name="fine_amt")
 	private float fineAmt;
 
+	@Column(name="paid")
 	private byte paid;
 
 	//bi-directional one-to-one association to BookLoan
-	@JsonIgnore
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="loan_id")
 	private BookLoan bookLoan;
