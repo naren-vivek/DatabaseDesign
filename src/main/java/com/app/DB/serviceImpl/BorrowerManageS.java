@@ -13,27 +13,26 @@ import com.app.DB.model.Book;
 import com.app.DB.model.Borrower;
 import com.app.DB.model.Fine;
 
-
 @Service
 @Transactional
 public class BorrowerManageS {
 
 	@Autowired
 	BorrowerRepository borrowerRepository;
-	
-	 @Autowired
+
+	@Autowired
 	FineRepository fineRepository;
-	
+
 	@Autowired
 	BookRepository bookRepository;
-	
-	public boolean addBorrower(String cardNo,String fname,String lname,String ssn,String address,String PhoneNumber){
-		
-		if(borrowerRepository.exists(ssn)){
+
+	public boolean addBorrower(String cardNo, String fname, String lname, String ssn, String address,
+			String PhoneNumber) {
+
+		if (borrowerRepository.isSsnValid(ssn)==0) {
 			return false;
-		}
-		else{
-			Borrower borrower=new Borrower();
+		} else {
+			Borrower borrower = new Borrower();
 			borrower.setCardNo(cardNo);
 			borrower.setFname(fname);
 			borrower.setLname(lname);
@@ -42,23 +41,23 @@ public class BorrowerManageS {
 			borrower.setPhone(PhoneNumber);
 			borrowerRepository.save(borrower);
 			return true;
-			//borrowerRepository.saveBorrower(fname,lname,ssn,address);
+			// borrowerRepository.saveBorrower(fname,lname,ssn,address);
 		}
 	}
-	
-	public float fines(String fname,String lname){
-		float fines=fineRepository.getFines(fname,lname);
+
+	public float fines(String fname, String lname) {
+		float fines = fineRepository.getFines(fname, lname);
 		return fines;
-		
+
 	}
-	
-	public List<Book> getOverdue(String fname,String lname){
-		List<Book> books=bookRepository.getOverdueBook(fname,lname);
+
+	public List<Book> getOverdue(String fname, String lname) {
+		List<Book> books = bookRepository.getOverdueBook(fname, lname);
 		return books;
 	}
-	
-	public boolean finePaid(String bookId){
-		fineRepository.FineEntry(bookId);
+
+	public boolean finePaid(String cardNo) {
+		fineRepository.FineEntry(cardNo);
 		return true;
 	}
 }

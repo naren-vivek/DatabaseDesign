@@ -15,8 +15,8 @@ public interface FineRepository extends CrudRepository<Fine, String>{
 	public float getFines(String fname,String lname);
 	
 	@Modifying
-	@Query("update Fine f set f.paid=1 where loanId=(select bl.loanId from"
-			+ " BookLoan bl where bl.bookId=?1)")
-	public void FineEntry(String bookId);
+	@Query("update Fine f set f.paid=1 where loanId in (select bl.loanId from"
+			+ " BookLoan bl where bl.cardNo=?1)")
+	public void FineEntry(String cardNo);
 	
 }

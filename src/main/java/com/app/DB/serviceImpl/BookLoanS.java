@@ -1,4 +1,5 @@
 package com.app.DB.serviceImpl;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -8,65 +9,79 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.DB.DAO.BookLoans;
 import com.app.DB.DAO.BookSearchRepository;
+import com.app.DB.model.Book;
 import com.app.DB.model.BookCopy;
 import com.app.DB.model.BookLoan;
 
 @Transactional
 @Service
-public class BookLoanS{
+public class BookLoanS {
 
 	@Autowired
 	BookSearchRepository bookSearchRepository;
-	
+
 	@Autowired
 	BookLoans bookLoans;
-	
-	public String checkOut(String fname,String lname,String cardNo,int bookId) {
+
+	public String checkOut(String fname, String lname, String cardNo, int bookId) {
 		// TODO Auto-generated method stub
+
+		// Long count=bookSearchRepository.check(cardNo);
+		//
+		// int val=bookSearchRepository.avaliable(bookId);
+
+		// System.out.println("value:" + val);
 		
-		Long count=bookSearchRepository.check(cardNo);
-		
-		int val=bookSearchRepository.avaliable(bookId);
-		System.out.println("value:"+ val);
-		if(bookSearchRepository.check(cardNo)>=3){
+		if (bookSearchRepository.check(cardNo) >= 3) {
 			return "User already borrowed 3 books";
-		}else if(bookSearchRepository.isOverDue(cardNo)>0){
+		} else if (bookSearchRepository.isOverDue(cardNo) > 0) {
 			return "User has overDue";
-		}
-		else if(bookSearchRepository.isPaid(cardNo)>0){
+		} else if (bookSearchRepository.isPaid(cardNo) > 0) {
 			return "user has Unpaid Amount";
-		}
-		else if(bookSearchRepository.avaliable(bookId)==1){
-			
+		} else if (bookSearchRepository.avaliable(bookId) == 1) {
+
 			Date dateOut = new Date(new java.util.Date().getTime());
-			Date dueDate = new Date(new java.util.Date().getTime()); 
-			BookLoan bookLoan=new BookLoan();
-			BookCopy bookCopy=new BookCopy();
+			Date dueDate = new Date(new java.util.Date().getTime());
+			BookLoan bookLoan = new BookLoan();
+			BookCopy bookCopy = new BookCopy();
 			bookLoan.setBookId(bookId);
 			bookLoan.setCardNo(cardNo);
 			bookLoan.setDateOut(dateOut);
-			int date=dueDate.getDate()+14;
+			int date = dueDate.getDate() + 14;
 			dueDate.setDate(date);
 			bookLoan.setDueDate(dueDate);
 			bookLoans.save(bookLoan);
-			bookSearchRepository.setBackAvailable(bookId,0);
+			bookSearchRepository.setBookAvailable(bookId, 0);
 			return "success";
-		}else{
+		} else {
 			return "already book borrowed";
 		}
-		
+
 	}
 
-
-	public boolean checkIn(String cardNo,int BookId) {
+	public boolean checkIn(String cardNo, int BookId) {
 		// TODO Auto-generated method stub
-		if(bookSearchRepository.isOverDue(cardNo)>0){
-			int loanId=bookSearchRepository.OverDueLoanId(cardNo);
-			float dateDiff=bookSearchRepository.OverDueLoan(cardNo);
-			bookSearchRepository.UpdateOverDue(loanId,dateDiff);
+		if (bookSearchRepository.isOverDue(cardNo) > 0) {
+			int loanId = bookSearchRepository.OverDueLoanId(cardNo);
+			float dateDiff = bookSearchRepository.OverDueLoan(cardNo);
+			bookSearchRepository.UpdateOverDue(loanId, dateDiff);
 		}
-		bookSearchRepository.checkIn(cardNo,BookId);
+		bookSearchRepository.checkIn(cardNo, BookId);
+		bookSearchRepository.setBookAvailable(BookId, 1);
 		return true;
+	}
+	
+	public List<BookLoan> getActiveBooksCardNum(String cardNo){
+		
+		List<BookLoan>books=bookSearchRepository.getActiveBooksCardNo(cardNo);
+		
+		return books;
+	}
+	
+	public List<BookLoan> getActiveBooks(String isbn){
+		List<BookLoan> books=bookSearchRepository.getActiveBooks(isbn);
+		
+		return books;
 	}
 
 }

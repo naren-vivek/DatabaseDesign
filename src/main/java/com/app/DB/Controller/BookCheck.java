@@ -40,4 +40,18 @@ public class BookCheck {
 		
 	}
 	
+	@RequestMapping(value="/getActiveBooksCardNum", method=RequestMethod.GET)
+	public ResponseEntity<String> activeBooksCard(
+			@RequestParam(required=true)String cardNo
+			){
+		return new ResponseEntity<String>(gson.toJson(bookLoanService.getActiveBooksCardNum(cardNo)),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getActiveBooks", method=RequestMethod.GET)
+	public ResponseEntity<String> activeBooks(
+			@RequestParam(required=true)String isbn
+			){
+		return new ResponseEntity<String>(gson.toJson(bookLoanService.getActiveBooks(isbn)),HttpStatus.OK);
+	}
+	
 }
