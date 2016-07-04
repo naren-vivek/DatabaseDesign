@@ -9,9 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.DB.DAO.BookLoans;
 import com.app.DB.DAO.BookSearchRepository;
-import com.app.DB.model.Book;
+import com.app.DB.DAO.FineRepository;
 import com.app.DB.model.BookCopy;
 import com.app.DB.model.BookLoan;
+import com.app.DB.model.Fine;
 
 @Transactional
 @Service
@@ -22,19 +23,15 @@ public class BookLoanS {
 
 	@Autowired
 	BookLoans bookLoans;
+	
+	@Autowired
+	FineRepository fineRepository;
 
-	public String checkOut(String fname, String lname, String cardNo, int bookId) {
-		// TODO Auto-generated method stub
-
-		// Long count=bookSearchRepository.check(cardNo);
-		//
-		// int val=bookSearchRepository.avaliable(bookId);
-
-		// System.out.println("value:" + val);
+	public String checkOut(String cardNo, int bookId) {
 		
 		if (bookSearchRepository.check(cardNo) >= 3) {
 			return "User already borrowed 3 books";
-		} else if (bookSearchRepository.isOverDue(cardNo) > 0) {
+		} else if (bookSearchRepository.isOverDueCheckOut(cardNo) > 0) {
 			return "User has overDue";
 		} else if (bookSearchRepository.isPaid(cardNo) > 0) {
 			return "user has Unpaid Amount";
@@ -43,7 +40,6 @@ public class BookLoanS {
 			Date dateOut = new Date(new java.util.Date().getTime());
 			Date dueDate = new Date(new java.util.Date().getTime());
 			BookLoan bookLoan = new BookLoan();
-			BookCopy bookCopy = new BookCopy();
 			bookLoan.setBookId(bookId);
 			bookLoan.setCardNo(cardNo);
 			bookLoan.setDateOut(dateOut);
@@ -61,10 +57,15 @@ public class BookLoanS {
 
 	public boolean checkIn(String cardNo, int BookId) {
 		// TODO Auto-generated method stub
-		if (bookSearchRepository.isOverDue(cardNo) > 0) {
-			int loanId = bookSearchRepository.OverDueLoanId(cardNo);
-			float dateDiff = bookSearchRepository.OverDueLoan(cardNo);
-			bookSearchRepository.UpdateOverDue(loanId, dateDiff);
+		if (bookSearchRepository.isOverDue(BookId) > 0) {
+			int loanId = bookSearchRepository.OverDueLoanId(BookId);
+			float fineamt = bookSearchRepository.OverDueLoan(BookId);
+			//bookSearchRepository.UpdateOverDue(loanId, dateDiff);
+			Fine fine=new Fine();
+			fine.setLoanId(loanId);
+			fine.setFineAmt(fineamt);
+			fine.setPaid((byte)0);
+			fineRepository.save(fine);
 		}
 		bookSearchRepository.checkIn(cardNo, BookId);
 		bookSearchRepository.setBookAvailable(BookId, 1);
@@ -74,13 +75,11 @@ public class BookLoanS {
 	public List<BookLoan> getActiveBooksCardNum(String cardNo){
 		
 		List<BookLoan>books=bookSearchRepository.getActiveBooksCardNo(cardNo);
-		
 		return books;
 	}
 	
 	public List<BookLoan> getActiveBooks(String isbn){
 		List<BookLoan> books=bookSearchRepository.getActiveBooks(isbn);
-		
 		return books;
 	}
 

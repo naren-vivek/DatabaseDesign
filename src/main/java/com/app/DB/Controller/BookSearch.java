@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.DB.model.Book;
+import com.app.DB.Domain.BookDomain;
 import com.app.DB.serviceImpl.BookSearchS;
 import com.google.gson.Gson;
 
@@ -22,15 +22,18 @@ public class BookSearch {
 	BookSearchS bookSearch;
 	Gson gson = new Gson();
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Book>> bookSearch(
+	@RequestMapping(value="/search",method = RequestMethod.GET)
+	public ResponseEntity<List<BookDomain>> bookSearch(
 			// @RequestParam(required=true)String libraryBranch,
-			@RequestParam(required = true) String field, @RequestParam(required = true) int branch) throws Exception {
+			@RequestParam(required = false) String isbn,
+			@RequestParam(required = false) String title,
+			@RequestParam(required = false) String author,
+			@RequestParam(required = false) int branch) throws Exception {
 
-		List<Book> books = bookSearch.search(field, branch);
+		List<BookDomain> books = bookSearch.search(isbn,title,author, branch);
 		// return books;
-
-		return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
+		
+		return new ResponseEntity<List<BookDomain>>(books, HttpStatus.OK);
 
 	}
 

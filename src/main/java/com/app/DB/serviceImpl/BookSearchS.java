@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.DB.DAO.BookSearchRepository;
-import com.app.DB.model.Book;
+import com.app.DB.Domain.BookDomain;
 
 @Service
 public class BookSearchS {
@@ -14,10 +14,10 @@ public class BookSearchS {
 	@Autowired
 	BookSearchRepository bookSearchRepository;
 
-	public List<Book> search(String value, int branch) {
+	public List<BookDomain> search(String isbn,String title,String author, int branch) {
 		// TODO Auto-generated method stub
 
-		List<Book> search = bookSearchRepository.searchBooks(value.toLowerCase(), branch);
+		List<BookDomain> search = bookSearchRepository.searchBooks(isbn.toLowerCase(),title.toLowerCase(),author.toLowerCase(), branch);
 		return search;
 	}
 

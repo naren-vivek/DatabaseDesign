@@ -22,13 +22,11 @@ public class BookCheck {
 	
 	@RequestMapping(value="/checkout", method=RequestMethod.POST)
 	public ResponseEntity<String> checkout(
-			@RequestParam(required=true)String fname,
-			@RequestParam(required=true)String lname,
 			@RequestParam(required=true)String cardNo,
 			@RequestParam(required=true)int bookId
 			){
 
-			return new ResponseEntity<String>(gson.toJson(bookLoanService.checkOut(fname,lname,cardNo,bookId)),HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson(bookLoanService.checkOut(cardNo,bookId)),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/checkin", method=RequestMethod.POST)

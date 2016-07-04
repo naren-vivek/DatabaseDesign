@@ -45,19 +45,29 @@ public class BorrowerManageS {
 		}
 	}
 
-	public float fines(String fname, String lname) {
-		float fines = fineRepository.getFines(fname, lname);
+	public List<Fine> getFinesUnpaid(String cardNo) {
+		List<Fine> fines = fineRepository.getFinesUnpaid(cardNo);
+		return fines;
+
+	}
+	public List<Fine> getFinesPaid(String cardNo) {
+		List<Fine> fines = fineRepository.getFinesPaid(cardNo);
+		return fines;
+
+	}
+	public List<Fine> getFinesBoth(String cardNo) {
+		List<Fine> fines = fineRepository.getFinesBoth(cardNo);
 		return fines;
 
 	}
 
-	public List<Book> getOverdue(String fname, String lname) {
-		List<Book> books = bookRepository.getOverdueBook(fname, lname);
+	public List<Book> getOverdue(String cardNo) {
+		List<Book> books = bookRepository.getOverdueBook(cardNo);
 		return books;
 	}
 
-	public boolean finePaid(String cardNo) {
-		fineRepository.FineEntry(cardNo);
+	public boolean finePaid(int loanId) {
+		fineRepository.FineEntry(loanId);
 		return true;
 	}
 }
