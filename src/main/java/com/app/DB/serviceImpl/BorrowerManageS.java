@@ -26,12 +26,15 @@ public class BorrowerManageS {
 	@Autowired
 	BookRepository bookRepository;
 
-	public boolean addBorrower(String cardNo, String fname, String lname, String ssn, String address,
+	public String addBorrower(String cardNo, String fname, String lname, String ssn, String address,
 			String PhoneNumber) {
 
-		if (borrowerRepository.isSsnValid(ssn)==0) {
-			return false;
-		} else {
+		if (borrowerRepository.isSsnValid(ssn)>0) {
+			return "Duplicate SSN or invalid SSN";
+		}else if(borrowerRepository.exists(cardNo)){
+			return "User alredy exist with the same CardNo";
+		}
+		else {
 			Borrower borrower = new Borrower();
 			borrower.setCardNo(cardNo);
 			borrower.setFname(fname);
@@ -40,7 +43,7 @@ public class BorrowerManageS {
 			borrower.setAddress(address);
 			borrower.setPhone(PhoneNumber);
 			borrowerRepository.save(borrower);
-			return true;
+			return "success";
 			// borrowerRepository.saveBorrower(fname,lname,ssn,address);
 		}
 	}

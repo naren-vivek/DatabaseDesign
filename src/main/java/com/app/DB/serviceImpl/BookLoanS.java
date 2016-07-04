@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.DB.DAO.BookLoans;
 import com.app.DB.DAO.BookSearchRepository;
+import com.app.DB.DAO.BorrowerRepository;
 import com.app.DB.DAO.FineRepository;
 import com.app.DB.model.BookCopy;
 import com.app.DB.model.BookLoan;
@@ -26,9 +27,13 @@ public class BookLoanS {
 	
 	@Autowired
 	FineRepository fineRepository;
-
+	
+	@Autowired
+	BorrowerRepository borrowerRepository;
+	
 	public String checkOut(String cardNo, int bookId) {
 		
+		if(borrowerRepository.exists(cardNo)){
 		if (bookSearchRepository.check(cardNo) >= 3) {
 			return "User already borrowed 3 books";
 		} else if (bookSearchRepository.isOverDueCheckOut(cardNo) > 0) {
@@ -52,7 +57,9 @@ public class BookLoanS {
 		} else {
 			return "already book borrowed";
 		}
-
+		}else{
+			return "Borrower not found";
+		}
 	}
 
 	public boolean checkIn(String cardNo, int BookId) {

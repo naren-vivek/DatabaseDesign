@@ -26,15 +26,21 @@ public class BookCheck {
 			@RequestParam(required=true)int bookId
 			){
 
-			return new ResponseEntity<String>(gson.toJson(bookLoanService.checkOut(cardNo,bookId)),HttpStatus.OK);
+			String check=bookLoanService.checkOut(cardNo,bookId);
+			if(check.equals("success")){
+				return new ResponseEntity<String>(gson.toJson(check),HttpStatus.OK);
+			}
+			else{
+				return new ResponseEntity<String>(gson.toJson(check),HttpStatus.BAD_REQUEST);
+			}
 	}
 	
 	@RequestMapping(value="/checkin", method=RequestMethod.POST)
 	public ResponseEntity<String> checkin(
 		@RequestParam(required=true)String cardNo,
-		@RequestParam(required=true) int BookId
+		@RequestParam(required=true) int bookId
 			){
-			return new ResponseEntity<String>(gson.toJson(bookLoanService.checkIn(cardNo,BookId)),HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson(bookLoanService.checkIn(cardNo,bookId)),HttpStatus.OK);
 		
 	}
 	

@@ -22,13 +22,20 @@ public class BorrowerController {
 	
 	@RequestMapping(value="/addBorrower", method=RequestMethod.POST)
 	public ResponseEntity<String> borrower(
-			@RequestParam(required=true) String cardno,	
+			@RequestParam(required=true) String cardNo,	
 			@RequestParam(required=true) String ssn,
-			@RequestParam(required=true) String fname,
-			@RequestParam(required=true) String lname,
+			@RequestParam(required=true) String firstName,
+			@RequestParam(required=true) String lastName,
 			@RequestParam(required=true) String address,
-			@RequestParam(required=false) String phoneNumber){
-		return new ResponseEntity<String>(gson.toJson(borrowerManageService.addBorrower(cardno,fname,lname, ssn, address,phoneNumber)),HttpStatus.OK);
+			@RequestParam(required=false) String phoneNo){
+			String check=borrowerManageService.addBorrower(cardNo,firstName,lastName, ssn, address,phoneNo);
+			
+			if(check.equals("success")){
+				return new ResponseEntity<String>(gson.toJson(check),HttpStatus.OK);
+			}else{
+				return new ResponseEntity<String>(gson.toJson(check),HttpStatus.BAD_REQUEST);
+			}
+		
 	}
 	
 	@RequestMapping(value="/fines",method=RequestMethod.GET)
