@@ -55,7 +55,7 @@ public interface BookSearchRepository extends CrudRepository<Book, String> {
 	@Query("select loanId from BookLoan bl where bl.bookId=:bookId and dateIn is null and datediff(curdate(),bl.dueDate)> 0 ")
 	public int OverDueLoanId(@Param("bookId") int bookId);
 
-	@Query("select datediff(curdate(),bl.dueDate)*0.25 from BookLoan bl where bl.bookId=:bookId and dateIn is null and datediff(curdate(),bl.dueDate)> 0 ")
+	@Query("select datediff(curdate(),bl.dueDate) from BookLoan bl where bl.bookId=:bookId and dateIn is null and datediff(curdate(),bl.dueDate)> 0 ")
 	public int OverDueLoan(@Param("bookId") int bookId);
 
 	@Modifying

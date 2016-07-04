@@ -28,7 +28,7 @@ public interface FineRepository extends CrudRepository<Fine, String>{
 	
 	
 	@Modifying
-	@Query("update Fine f set f.paid=1 where f.loanId=?1")
+	@Query("update Fine f set f.paid=1, f.fineAmt=0 where f.loanId=?1")
 	public void FineEntry(int loanId);
 	
 }

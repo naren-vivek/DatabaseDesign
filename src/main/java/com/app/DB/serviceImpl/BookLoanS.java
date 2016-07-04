@@ -60,6 +60,7 @@ public class BookLoanS {
 		if (bookSearchRepository.isOverDue(BookId) > 0) {
 			int loanId = bookSearchRepository.OverDueLoanId(BookId);
 			float fineamt = bookSearchRepository.OverDueLoan(BookId);
+			fineamt=(float) ((float)fineamt * 0.25);
 			//bookSearchRepository.UpdateOverDue(loanId, dateDiff);
 			Fine fine=new Fine();
 			fine.setLoanId(loanId);
