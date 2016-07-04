@@ -38,6 +38,21 @@ public interface BookSearchRepository extends CrudRepository<Book, String> {
 	@Query("select count(*) from Fine f join f.bookLoan bl where bl.cardNo=:cardNo and f.paid=0")
 	public int isPaid(@Param("cardNo")String cardNo);
 	
-	@Query("select count(*) from BookLoan b where b.cardNo=:cardNo and datediff(curdate(), b.dueDate) > 0)")
+	@Query("select count(*) from BookLoan b where b.cardNo=:cardNo and dateIn is null and datediff(curdate(), b.dueDate) > 0)")
 	public int isOverDue(@Param("cardNo")String cardNo);
+	
+	@Modifying
+	@Query("update BookLoan set dateIn=curdate() where cardNo=:cardNo and bookId=:bookId")
+	public void checkIn(@Param("cardNo")String cardNo, @Param("bookId")int bookId);
+	
+	@Query("select loanId from BookLoan bl where bl.cardNo=:cardNo and dateIn is null and datediff(curdate(),bl.dueDate)> 0 ")
+	public int OverDueLoanId(@Param("cardNo")String cardNo);
+	
+	@Query("select datediff(curdate(),bl.dueDate) from BookLoan bl where bl.cardNo=:cardNo and dateIn is null and datediff(curdate(),bl.dueDate)> 0 ")
+	public int OverDueLoan(@Param("cardNo")String cardNo);
+	
+	@Modifying
+	@Query("update Fine set fineAmt=(:dateDiff)*0.25 where loanId=:loanId")
+	public void UpdateOverDue(@Param("loanId")int loanId,@Param("dateDiff")double dateDiff);
+	
 }

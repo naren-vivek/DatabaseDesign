@@ -1,5 +1,6 @@
 package com.app.DB.serviceImpl;
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,9 +30,9 @@ public class BookLoanS{
 		System.out.println("value:"+ val);
 		if(bookSearchRepository.check(cardNo)>=3){
 			return "User already borrowed 3 books";
-		}/*else if(bookSearchRepository.isOverDue(cardNo)>0){
+		}else if(bookSearchRepository.isOverDue(cardNo)>0){
 			return "User has overDue";
-		}*/
+		}
 		else if(bookSearchRepository.isPaid(cardNo)>0){
 			return "user has Unpaid Amount";
 		}
@@ -56,17 +57,16 @@ public class BookLoanS{
 		
 	}
 
-	public int numOfBooks(String borrower) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
-	public boolean checkIn(String borrower, String Bookname) {
+	public boolean checkIn(String cardNo,int BookId) {
 		// TODO Auto-generated method stub
-		
-		//fetch the data to check fines
-		//if(bookSearchRepository.)
-		return false;
+		if(bookSearchRepository.isOverDue(cardNo)>0){
+			int loanId=bookSearchRepository.OverDueLoanId(cardNo);
+			float dateDiff=bookSearchRepository.OverDueLoan(cardNo);
+			bookSearchRepository.UpdateOverDue(loanId,dateDiff);
+		}
+		bookSearchRepository.checkIn(cardNo,BookId);
+		return true;
 	}
 
 }

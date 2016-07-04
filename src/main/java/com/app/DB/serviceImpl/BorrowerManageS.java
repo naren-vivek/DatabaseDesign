@@ -46,8 +46,8 @@ public class BorrowerManageS {
 		}
 	}
 	
-	public Fine fines(String fname,String lname){
-		Fine fines=fineRepository.getFines(fname,lname);
+	public float fines(String fname,String lname){
+		float fines=fineRepository.getFines(fname,lname);
 		return fines;
 		
 	}

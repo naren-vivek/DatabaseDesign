@@ -33,13 +33,11 @@ public class BookCheck {
 	
 	@RequestMapping(value="/checkin", method=RequestMethod.POST)
 	public ResponseEntity<String> checkin(
-		@RequestParam(required=true)String borrower,
-		@RequestParam(required=true) String bookname
+		@RequestParam(required=true)String cardNo,
+		@RequestParam(required=true) int BookId
 			){
-			/*return new ResponseEntity<String>(
-					gson.toJson(bookLoanService.checkIn(borrower, bookname)),HttpStatus.OK);
-		*/
-		return null;
+			return new ResponseEntity<String>(gson.toJson(bookLoanService.checkIn(cardNo,BookId)),HttpStatus.OK);
+		
 	}
 	
 }

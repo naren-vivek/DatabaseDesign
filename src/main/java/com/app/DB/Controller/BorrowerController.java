@@ -39,14 +39,14 @@ public class BorrowerController {
 		return new ResponseEntity<String>(gson.toJson(borrowerManageService.fines(fname,lname)),HttpStatus.OK); 	
 	}
 	
-	@RequestMapping(value="/overdue")
+	@RequestMapping(value="/overdue",method=RequestMethod.GET)
 	public ResponseEntity<String> overdue(
 			@RequestParam(required=true)String fname,
 			@RequestParam(required=true)String lname){
 		return new ResponseEntity<String>(gson.toJson(borrowerManageService.getOverdue(fname,lname)),HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/fineEntry")
+	@RequestMapping(value="/fineEntry",method=RequestMethod.POST)
 	public ResponseEntity<String> fineEntry( 
 			@RequestParam(required=true)String bookId
 			){
