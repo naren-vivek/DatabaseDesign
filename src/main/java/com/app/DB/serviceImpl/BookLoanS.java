@@ -11,7 +11,6 @@ import com.app.DB.DAO.BookLoans;
 import com.app.DB.DAO.BookSearchRepository;
 import com.app.DB.DAO.BorrowerRepository;
 import com.app.DB.DAO.FineRepository;
-import com.app.DB.model.BookCopy;
 import com.app.DB.model.BookLoan;
 import com.app.DB.model.Fine;
 
@@ -62,7 +61,7 @@ public class BookLoanS {
 		}
 	}
 
-	public boolean checkIn(String cardNo, int BookId) {
+	public List<BookLoan> checkIn(String cardNo, int BookId) {
 		// TODO Auto-generated method stub
 		if (bookSearchRepository.isOverDue(BookId) > 0) {
 			int loanId = bookSearchRepository.OverDueLoanId(BookId);
@@ -77,7 +76,8 @@ public class BookLoanS {
 		}
 		bookSearchRepository.checkIn(cardNo, BookId);
 		bookSearchRepository.setBookAvailable(BookId, 1);
-		return true;
+		List<BookLoan> bookLoan=bookSearchRepository.getSingleBooks(cardNo, BookId);
+		return bookLoan;
 	}
 	
 	public List<BookLoan> getActiveBooksCardNum(String cardNo){

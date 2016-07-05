@@ -62,10 +62,13 @@ public interface BookSearchRepository extends CrudRepository<Book, String> {
 	@Query("update Fine set fineAmt=(:dateDiff)*0.25 where loanId=:loanId")
 	public void UpdateOverDue(@Param("loanId") int loanId, @Param("dateDiff") double dateDiff);
 	
-	@Query("select new com.app.DB.Domain.BookLoanDomain(loanId,bookId,cardNo,dateOut,dueDate,dateIn) from BookLoan where cardNo=:cardNo")
+	@Query("select new com.app.DB.Domain.BookLoanDomain(loanId,bookId,cardNo,dateOut,dueDate,dateIn) from BookLoan where cardNo like %:cardNo% and dateIn is null")
 	public List<BookLoan> getActiveBooksCardNo(@Param("cardNo")String cardNo);
 	
-	@Query("select new com.app.DB.Domain.BookLoanDomain(bk.loanId,bk.bookId,bk.cardNo,bk.dateOut,bk.dueDate,bk.dateIn) from BookLoan bk join bk.bookCopy bc join bc.book b where b.isbn=:isbn")
+	@Query("select new com.app.DB.Domain.BookLoanDomain(bk.loanId,bk.bookId,bk.cardNo,bk.dateOut,bk.dueDate,bk.dateIn) from BookLoan bk join bk.bookCopy bc join bc.book b where b.isbn like %:isbn% and bk.dateIn is null")
 	public List<BookLoan> getActiveBooks(@Param("isbn")String isbn);
+	
+	@Query("select new com.app.DB.Domain.BookLoanDomain(bk.loanId,bk.bookId,bk.cardNo,bk.dateOut,bk.dueDate,bk.dateIn) from BookLoan bk join bk.bookCopy bc join bc.book b where bk.cardNo=:cardNo and bk.bookId=:bookId")
+	public List<BookLoan> getSingleBooks(@Param("cardNo")String cardNo,@Param("bookId")int bookId);
 
 }

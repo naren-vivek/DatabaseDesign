@@ -41,17 +41,17 @@ public class BorrowerController {
 	@RequestMapping(value="/fines",method=RequestMethod.GET)
 	public ResponseEntity<String> fines(
 			@RequestParam(required=true)String cardNo,
-			@RequestParam (required=false)boolean paid,
-			@RequestParam (required=false)boolean both
+			@RequestParam (required=false)int paid
 		){
-		if(paid){
+		if(paid==1){
 			return new ResponseEntity<String>(gson.toJson(borrowerManageService.getFinesPaid(cardNo)),HttpStatus.OK);
 		}
-		else if(both){
-			return new ResponseEntity<String>(gson.toJson(borrowerManageService.getFinesBoth(cardNo)),HttpStatus.OK);
+		else if(paid==2){
+			return new ResponseEntity<String>(gson.toJson(borrowerManageService.getFinesUnpaid(cardNo)),HttpStatus.OK);
 		}
 		else{
-			return new ResponseEntity<String>(gson.toJson(borrowerManageService.getFinesUnpaid(cardNo)),HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson(borrowerManageService.getFinesBoth(cardNo)),HttpStatus.OK);
+			
 		}
  	
 	}

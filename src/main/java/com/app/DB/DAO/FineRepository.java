@@ -23,7 +23,7 @@ public interface FineRepository extends CrudRepository<Fine, String>{
 	public List<Fine> getFinesPaid(@Param("cardNo")String cardNo);
 	
 	@Query("select new com.app.DB.Domain.FineDomain(f.loanId,f.fineAmt,f.paid) from Fine f join f.bookLoan loan join loan.borrower b "
-			+ "where b.cardNo=:cardNo ")
+			+ "where b.cardNo=:cardNo")
 	public List<Fine> getFinesBoth(@Param("cardNo")String cardNo);
 	
 	

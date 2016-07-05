@@ -16,7 +16,7 @@ public interface BookRepository extends CrudRepository<Book, String>{
 	public List<Book> getOverdueBook(String fname,String lname);*/
 	
 	@Query("select new com.app.DB.Domain.OverDueDomain(b.title) from Book b join b.bookCopies bc join "
-			+ "bc.bookLoans bl join bl.borrower bo where bo.cardNo=:cardNo and datediff(bl.dueDate,curdate())<0 and bl.dateIn is null")
+			+ "bc.bookLoans bl join bl.borrower bo where bo.cardNo like %:cardNo% and datediff(bl.dueDate,curdate())<0 and bl.dateIn is null")
 	public List<Book> getOverdueBook(@Param("cardNo")String cardNo);
 	
 	
