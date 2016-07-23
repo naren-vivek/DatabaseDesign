@@ -22,6 +22,10 @@ public interface BookSearchRepository extends CrudRepository<Book, String> {
 			+ " b.authors a join b.bookCopies bc join bc.libraryBranch lb where (lb.branchId=:branch and (lower(a.name) like %:author% or lower(b.isbn) like %:isbn% or lower(b.title) like %:title% ))")
 	public List<BookDomain> searchBooks(@Param("isbn") String isbn,@Param("title") String title,@Param("author") String author, @Param("branch") int branch);
 
+	@Query("select new com.app.DB.Domain.BookDomain(b.isbn,b.title,a.name,bc.bookId,lb.branchId,bc.availability) from Book b join"
+			+ " b.authors a join b.bookCopies bc join bc.libraryBranch lb where (lb.branchId=:branch and (lower(a.name) like %:common% or lower(b.isbn) like %:common% or lower(b.title) like %:common% ))")
+	public List<BookDomain> searchBooks(@Param("common") String common, @Param("branch") int branch);
+
 	/*
 	 * @Query(
 	 * "insert into BookLoan (bookId,cardNo,dateOut,dueDate) select ?1,?2,curdate(),adddate(curdate())"

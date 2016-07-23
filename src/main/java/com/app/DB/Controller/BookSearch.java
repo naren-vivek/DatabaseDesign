@@ -25,12 +25,13 @@ public class BookSearch {
 	@RequestMapping(value="/search",method = RequestMethod.GET)
 	public ResponseEntity<List<BookDomain>> bookSearch(
 			// @RequestParam(required=true)String libraryBranch,
-			@RequestParam(required = false) String isbn,
+			/*@RequestParam(required = false) String isbn,
 			@RequestParam(required = false) String title,
-			@RequestParam(required = false) String author,
+			@RequestParam(required = false) String author,*/
+			@RequestParam(required = false) String common,
 			@RequestParam(required = false) int branch) throws Exception {
 
-		List<BookDomain> books = bookSearch.search(isbn,title,author, branch);
+		List<BookDomain> books = bookSearch.search(common, branch);
 		// return books;
 		
 		return new ResponseEntity<List<BookDomain>>(books, HttpStatus.OK);
